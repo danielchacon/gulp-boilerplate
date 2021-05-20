@@ -1,0 +1,15 @@
+@import "abstract/variables";
+
+body {
+  background-color: $color-1;
+  color: white;
+}
+
+div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+span {
+  display: flex;
+}
