@@ -7,12 +7,12 @@ const sourcemaps = require("gulp-sourcemaps");
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
 const cleanCss = require("gulp-clean-css");
-const rollup = require("rollup-stream");
-const source = require("vinyl-source-stream");
-const buffer = require("vinyl-buffer");
+const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const imagemin = require("gulp-imagemin");
 const browserSync = require("browser-sync").create();
+const webpack = require("webpack-stream");
+const concat = require("gulp-concat");
 
 const isProd = process.env.NODE_ENV === "production";
 const isDev =
@@ -47,12 +47,9 @@ function styles() {
     .pipe(gulpif(isDev, sourcemaps.init()))
     .pipe(sass())
     .pipe(
-      gulpif(
-        isProd,
-        autoprefixer({
-          grid: true,
-        })
-      )
+      autoprefixer({
+        grid: true,
+      })
     )
     .pipe(gulpif(isProd, cleanCss()))
     .pipe(gulpif(isDev, sourcemaps.write()))
@@ -61,15 +58,20 @@ function styles() {
 }
 
 function scripts() {
-  return rollup({
-    input: path.src + "scripts/index.js",
-    sourcemap: isDev,
-    format: "umd",
-  })
-    .pipe(source("app.js"))
-    .pipe(buffer())
+  return src([path.src + "scripts/*.js"])
+    .pipe(
+      webpack({
+        mode: isProd ? "production" : "development",
+      })
+    )
     .pipe(gulpif(isDev, sourcemaps.init()))
+    .pipe(
+      babel({
+        presets: ["@babel/env"],
+      })
+    )
     .pipe(gulpif(isProd, uglify()))
+    .pipe(concat("app.js"))
     .pipe(gulpif(isDev, sourcemaps.write()))
     .pipe(dest(path.dist + "assets/js"))
     .pipe(browserSync.stream());
@@ -89,12 +91,19 @@ function fonts() {
     .pipe(browserSync.stream());
 }
 
+function meta() {
+  return src([path.src + "metadata/*.json"])
+    .pipe(dest(path.dist + "assets/metadata"))
+    .pipe(browserSync.stream());
+}
+
 function build(cb) {
   views();
   styles();
   scripts();
   images();
   fonts();
+  meta();
   cb();
 }
 
@@ -104,6 +113,7 @@ function handleChanges() {
   watch(path.src + "scripts/**/*.js", scripts);
   watch(path.src + "images/**/*.+(jpg|jpeg|gif|png)", images);
   watch(path.src + "fonts/*.+(ttf|eot|woff|woff2)", fonts);
+  watch(path.src + "metadata/*.json", meta);
 }
 
 function serve() {

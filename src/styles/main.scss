@@ -1,15 +1,8 @@
+@import "../../node_modules/destyle.css/destyle";
 @import "abstract/variables";
-
-body {
-  background-color: $color-1;
-  color: white;
-}
-
-div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-span {
-  display: flex;
-}
+@import "abstract/mixins";
+@import "base/typography";
+@import "components/switcher";
+@import "components/buttons";
+@import "layout/page";
+@import "pages/start";

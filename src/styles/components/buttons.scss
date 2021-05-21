@@ -1,0 +1,53 @@
+.btn {
+  display: inline-block;
+  transition: background-color $basic-duration ease-in-out,
+    color $basic-duration ease-in-out;
+}
+
+.btn__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.btn__helper svg {
+  display: block;
+}
+
+.btn.m {
+  font-weight: 500;
+
+  @include desktop-up {
+    height: 35px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-size: 14px;
+    line-height: 12px;
+    border-radius: 2px;
+  }
+}
+
+.btn.m .btn__helper {
+  @include desktop-up {
+    margin-left: 5px;
+  }
+}
+
+.btn.primary {
+  background-color: $color-1;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.btn.primary:hover {
+  background-color: white;
+  color: $color-1;
+}
+
+.btn.direct .btn__helper svg {
+  @include desktop-up {
+    width: 14px;
+    height: 10px;
+  }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+@@include('./includes/head.html')
+
+<body>
+  <div class="page">
+    @@include('./includes/header.html')
+    <div class="page__main start-page container">
+      <div class="start-page__content">
+        <h1 class="page-heading" data-locale="start.heading">Price Sign Builder</h1>
+        <div class="basic-text" data-locale="start.text">
+          <p>You can quickly assemble ready-to-print price signs for your store.</p>
+        </div>
+        <div class="start-page__lang">
+          <ul class="switcher">
+            <li>
+              <button type="button" class="switcher__btn active">En</button>
+            </li>
+            <li>
+              <button type="button" class="switcher__btn">Fr</button>
+            </li>
+          </ul>
+        </div>
+        <div class="start-page__tools">
+          <a href="#" class="btn m primary direct">
+            <span class="btn__content">
+              <span class="btn__text" data-locale="start.btn">Start building my price sign</span>
+              <span class="btn__helper">
+                @@include('./includes/icons/arrow.html')
+              </span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  @@include('./includes/scripts.html')
+</body>
+
+</html>
