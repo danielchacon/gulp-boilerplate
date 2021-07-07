@@ -1,1 +1,1 @@
-import "./helpers/ui";
+console.log("Yay, scripts!")

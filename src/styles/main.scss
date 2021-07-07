@@ -1,8 +1,5 @@
 @import "../../node_modules/destyle.css/destyle";
-@import "abstract/variables";
-@import "abstract/mixins";
-@import "base/typography";
-@import "components/switcher";
-@import "components/buttons";
-@import "layout/page";
-@import "pages/start";
+
+body {
+    background-color: beige;
+}
